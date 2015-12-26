@@ -1,35 +1,120 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center_horizontal"
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="@layout/activity_main"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:showIn="@layout/activity_main">
+    android:layout_width="match_parent"
+    android:fillViewport="true">
 
-    <!--
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    -->
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:scrollbars="vertical"
+        android:weightSum="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-    <LinearLayout
-        android:id="@+id/chart"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        tools:ignore="Orientation">
+        <LinearLayout
+            android:id="@+id/week_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="16"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout style="@style/week_day_button_wrapper"
+                android:layout_weight="1"/>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/sunday_short" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/monday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/tuesday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/wednesday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/thrusday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/friday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper">
+                <Button
+                    style="@style/week_day_button"
+                    android:text="@string/saturday_short"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/week_day_button_wrapper"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            tools:ignore="Orientation">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/shadow_rectangle">
+
+            <EditText
+                android:id="@+id/allocation_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp" />
+
+            <EditText
+                android:id="@+id/add_new_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/allocation_add_new_activity"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/allocation_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/title"/>
-
-    <EditText
-        android:id="@+id/add_new_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/allocation_add_new_activity"/>
-
-</LinearLayout>
+</ScrollView>

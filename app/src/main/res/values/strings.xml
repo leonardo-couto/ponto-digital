@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">Ponto Digital</string>
-    <string name="app_name_modificado">Blablabla asdasd !!</string>
     <string name="action_settings">Settings</string>
-    <string name="title">Title</string>
+    <string name="name">Nome</string>
     <string name="allocation_single_title">Aloca\u00E7\u00E3o</string>
     <string name="allocation_add_new_activity">Projeto</string>
+
+    <string name="sunday_short">D</string>
+    <string name="monday_short">S</string>
+    <string name="tuesday_short">T</string>
+    <string name="wednesday_short">Q</string>
+    <string name="thrusday_short">Q</string>
+    <string name="friday_short">S</string>
+    <string name="saturday_short">S</string>
 </resources>

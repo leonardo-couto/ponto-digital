@@ -28,12 +28,6 @@ public class MainActivityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        /*
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "MaterialIcons-Regular.ttf");
-        TextView text = (TextView) view.findViewById(R.id.add_new_activity_sign);
-        text.setTypeface(font);
-        */
-
         LinearLayout addNewActivity = (LinearLayout) view.findViewById(R.id.add_new_activity);
         addNewActivity.setOnClickListener(new View.OnClickListener() {
             @Override

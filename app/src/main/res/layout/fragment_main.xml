@@ -135,21 +135,6 @@
         android:layout_gravity="center_vertical"
         android:background="@color/white">
 
-        <!--
-        <TextView
-            android:id="@+id/add_new_activity_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/icon_heart"
-            android:background="@android:color/transparent"
-            android:textSize="24sp"
-            android:textColorHint="@color/lightGray"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
-            -->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

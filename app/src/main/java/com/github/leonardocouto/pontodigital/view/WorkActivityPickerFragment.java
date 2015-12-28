@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,25 +53,13 @@ public class WorkActivityPickerFragment extends Fragment {
 
         // TODO: ver busca do Telegram
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_activity, R.id.item_activity, new String[] {
-                "DEV - C&A - Celula Scrum",
-                "DEV - Facti - RDA",
-                "DEV - Sodexo - Deep Dive",
-                "RH - Mentoria",
-        });
+        final ArrayAdapter<WorkActivity> adapter = mockedWorkActivities();
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // TODO item should be a WorkActivity
-                String item = adapter.getItem(position);
-                WorkActivity workActivity = new WorkActivity();
-                workActivity.setName(item);
-
-                pickWorkActivityHandler.handle(workActivity);
-
+                pickWorkActivityHandler.handle(adapter.getItem(position));
             }
         });
 
@@ -81,6 +70,16 @@ public class WorkActivityPickerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_foobar, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @NonNull
+    private ArrayAdapter<WorkActivity> mockedWorkActivities() {
+        return new ArrayAdapter<WorkActivity>(getActivity(), R.layout.list_item_activity, R.id.item_activity, new WorkActivity[] {
+                WorkActivity.build("DEV", "C&A", "Celula Scrum", "Desenvolvimento"),
+                WorkActivity.build("DEV", "Facti", "RDA", "Desenvolvimento"),
+                WorkActivity.build("DEV", "Sodexo", "Deep Dive", "Outros"),
+                WorkActivity.build("RH", "Desenvolvimento Organizacional", "Mentoria", "Outros")
+        });
     }
 
 }

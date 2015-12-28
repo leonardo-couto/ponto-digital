@@ -38,4 +38,18 @@ public class WorkActivity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s - %s", area, client, project);
+    }
+
+    public static WorkActivity build(String area, String client, String project, String name) {
+        WorkActivity workActivity = new WorkActivity();
+        workActivity.setArea(area);
+        workActivity.setClient(client);
+        workActivity.setName(name);
+        workActivity.setProject(project);
+        return workActivity;
+    }
 }

@@ -1,5 +1,6 @@
 package com.github.leonardocouto.pontodigital;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +26,16 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         this.makeChart(view);
+
+        LinearLayout addNewActivity = (LinearLayout) view.findViewById(R.id.add_new_activity);
+        addNewActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.openActivityPickerFragment();
+            }
+        });
+
         return view;
     }
 

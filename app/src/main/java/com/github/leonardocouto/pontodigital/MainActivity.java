@@ -1,15 +1,12 @@
 package com.github.leonardocouto.pontodigital;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //this.openAllocationFragment();
-        this.openActivityPickerFragment();
+        this.openAllocationFragment();
+        //this.openActivityPickerFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -48,21 +45,39 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void openActivityPickerFragment() {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    @Override
+    public void onBackPressed() {
+        // TODO: ver porque o super nao consegue lidar com o popstate
 
-        ActivityPickerFragment activityPicker = new ActivityPickerFragment();
-        fragmentTransaction.add(R.id.xptoid, activityPicker, "activity_picker_fragment");
-        fragmentTransaction.commit();
+        FragmentManager manager = getFragmentManager();
+
+        if (manager.getBackStackEntryCount() > 1) {
+            manager.popBackStack();
+            Toast.makeText(this, "ahhhhhhhhhhhhhhh!!!!", Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    private void openAllocationFragment() {
+    public void openActivityPickerFragment() {
         FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ActivityPickerFragment activityPicker = new ActivityPickerFragment();
 
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.xptoid, activityPicker, "activity_picker_fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void openAllocationFragment() {
+        FragmentManager fragmentManager = getFragmentManager();
         MainActivityFragment fragment = new MainActivityFragment();
-        fragmentTransaction.add(R.id.xptoid, fragment, "main_activity_fragment");
-        fragmentTransaction.commit();
+
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.xptoid, fragment, "main_activity_fragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

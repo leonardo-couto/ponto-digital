@@ -1,14 +1,13 @@
 package com.github.leonardocouto.pontodigital;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-        setSupportActionBar(toolbar);
+
+        setActionBar(toolbar);
     }
 
     @Override
@@ -43,20 +43,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        // TODO: ver porque o super nao consegue lidar com o popstate
-
-        FragmentManager manager = getFragmentManager();
-
-        if (manager.getBackStackEntryCount() > 1) {
-            manager.popBackStack();
-            Toast.makeText(this, "ahhhhhhhhhhhhhhh!!!!", Toast.LENGTH_SHORT).show();
-        } else {
-            super.onBackPressed();
-        }
     }
 
     public void openActivityPickerFragment() {

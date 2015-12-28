@@ -1,4 +1,4 @@
-package com.github.leonardocouto.pontodigital;
+package com.github.leonardocouto.pontodigital.view;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -7,7 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
-public class MainActivity extends Activity {
+import com.github.leonardocouto.pontodigital.R;
+import com.github.leonardocouto.pontodigital.entity.WorkActivity;
+
+public class AllocationActivity extends Activity implements PickWorkActivityHandler, AddWorkActivityActionHandler {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +18,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.openAllocationFragment();
-        //this.openActivityPickerFragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -25,7 +27,6 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -45,25 +46,32 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void openActivityPickerFragment() {
+    private void openAllocationFragment() {
         FragmentManager fragmentManager = getFragmentManager();
-        ActivityPickerFragment activityPicker = new ActivityPickerFragment();
+        AllocationFragment fragment = new AllocationFragment();
 
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.xptoid, activityPicker, "activity_picker_fragment")
-                .addToBackStack(null)
+                .replace(R.id.allocation_container, fragment, AllocationFragment.TAG)
                 .commit();
     }
 
-    public void openAllocationFragment() {
+    @Override
+    public void handle(WorkActivity work) {
         FragmentManager fragmentManager = getFragmentManager();
-        MainActivityFragment fragment = new MainActivityFragment();
+        fragmentManager.popBackStack(WorkActivityPickerFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        openAllocationFragment();
+    }
+
+    @Override
+    public void differentFrom(WorkActivity... excludes) {
+        FragmentManager fragmentManager = getFragmentManager();
+        WorkActivityPickerFragment fragment = new WorkActivityPickerFragment();
 
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.xptoid, fragment, "main_activity_fragment")
-                .addToBackStack(null)
+                .replace(R.id.allocation_container, fragment, WorkActivityPickerFragment.TAG)
+                .addToBackStack(WorkActivityPickerFragment.TAG)
                 .commit();
     }
 }

@@ -1,6 +1,8 @@
-package com.github.leonardocouto.pontodigital;
+package com.github.leonardocouto.pontodigital.view;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,15 +14,34 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ActivityPickerFragment extends Fragment {
+import com.github.leonardocouto.pontodigital.R;
+import com.github.leonardocouto.pontodigital.entity.WorkActivity;
 
-    public ActivityPickerFragment() {
+public class WorkActivityPickerFragment extends Fragment {
+
+    public static final String TAG = "work_activity_picker_fragment";
+    private PickWorkActivityHandler pickWorkActivityHandler;
+
+    public WorkActivityPickerFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        // the non-deprecated method was not being called
+        super.onAttach(activity);
+        this.pickWorkActivityHandler = (PickWorkActivityHandler) activity;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.pickWorkActivityHandler = (PickWorkActivityHandler) context;
     }
 
     @Override
@@ -42,8 +63,14 @@ public class ActivityPickerFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // TODO item should be a WorkActivity
                 String item = adapter.getItem(position);
-                Toast.makeText(getActivity(), item, Toast.LENGTH_SHORT).show();
+                WorkActivity workActivity = new WorkActivity();
+                workActivity.setName(item);
+
+                pickWorkActivityHandler.handle(workActivity);
+
             }
         });
 

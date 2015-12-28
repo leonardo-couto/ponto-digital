@@ -1,7 +1,8 @@
-package com.github.leonardocouto.pontodigital;
+package com.github.leonardocouto.pontodigital.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,15 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.github.leonardocouto.pontodigital.R;
+import com.github.leonardocouto.pontodigital.entity.WorkActivity;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
-public class MainActivityFragment extends Fragment {
+public class AllocationFragment extends Fragment {
 
-    public MainActivityFragment() {
+    public static final String TAG = "allocation_fragment";
+    private AddWorkActivityActionHandler addWorkActivity;
+
+    public AllocationFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        // the non-deprecated method was not being called
+        super.onAttach(activity);
+        this.addWorkActivity = (AddWorkActivityActionHandler) activity;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.addWorkActivity = (AddWorkActivityActionHandler) context;
     }
 
     @Override
@@ -31,8 +51,9 @@ public class MainActivityFragment extends Fragment {
         addNewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.openActivityPickerFragment();
+                // TODO get work activities already in the allocation before calling this method
+                WorkActivity[] currentActivities = new WorkActivity[0];
+                addWorkActivity.differentFrom(currentActivities);
             }
         });
 

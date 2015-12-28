@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.leonardocouto.pontodigital.R;
 import com.github.leonardocouto.pontodigital.entity.WorkActivity;
@@ -47,7 +46,7 @@ public class WorkActivityPickerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_picker, container, false);
+        View view = inflater.inflate(R.layout.fragment_work_activity_picker, container, false);
 
         ListView listView = (ListView) view.findViewById(R.id.listview_activity_picker);
 

@@ -10,15 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.github.leonardocouto.pontodigital.R;
 import com.github.leonardocouto.pontodigital.entity.WorkActivity;
+import com.github.leonardocouto.pontodigital.view.adapter.WorkActivityAllocationAdapter;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,11 +33,20 @@ public class AllocationFragment extends AllocationFragmentBase {
     public static final String TAG = "allocation_fragment";
 
     @Bind(R.id.chart) LinearLayout chartContainer;
+    @Bind(R.id.listview_activity_allocation) ListView listView;
+    private WorkActivityAllocationAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allocation, container, false);
         ButterKnife.bind(this, view);
+
+        if (this.adapter == null) {
+            this.adapter = new WorkActivityAllocationAdapter(view.getContext(),
+                    R.layout.list_item_allocation_work_activity, new ArrayList<WorkActivity>());
+        }
+
+        this.listView.setAdapter(this.adapter);
 
         this.makeChart();
 
@@ -45,6 +58,11 @@ public class AllocationFragment extends AllocationFragmentBase {
         // TODO get work activities already in the allocation before calling this method
         WorkActivity[] currentActivities = new WorkActivity[0];
         addWorkActivityActionHandler().differentFrom(currentActivities);
+    }
+
+    public void addWorkActivity(WorkActivity workActivity) {
+        this.adapter.add(workActivity);
+
     }
 
     private void makeChart() {

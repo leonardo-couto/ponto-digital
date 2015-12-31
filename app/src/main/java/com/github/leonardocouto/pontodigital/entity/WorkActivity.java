@@ -2,10 +2,15 @@ package com.github.leonardocouto.pontodigital.entity;
 
 public class WorkActivity {
 
+    private long id;
     private String area;
     private String client;
     private String project;
     private String name;
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getArea() {
         return area;

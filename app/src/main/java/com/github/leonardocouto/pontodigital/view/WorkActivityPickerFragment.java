@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -44,7 +43,7 @@ public class WorkActivityPickerFragment extends WorkActivityPickerFragmentBase {
     private ArrayAdapter<WorkActivity> mockedWorkActivities() {
         return new ArrayAdapter<WorkActivity>(
                 this.listView.getContext(),
-                R.layout.list_item_activity,
+                R.layout.list_item_picker_work_activity,
                 R.id.item_activity,
                 new WorkActivity[] {
                     WorkActivity.build("DEV", "C&A", "Celula Scrum", "Desenvolvimento"),

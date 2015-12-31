@@ -1,6 +1,7 @@
 package com.github.leonardocouto.pontodigital.view;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,10 +58,17 @@ public class AllocationActivity extends Activity implements PickWorkActivityHand
     }
 
     @Override
-    public void handle(WorkActivity work) {
+    public void handle(WorkActivity workActivity) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack(WorkActivityPickerFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        openAllocationFragment();
+
+        AllocationFragment fragment = (AllocationFragment) fragmentManager.findFragmentByTag(AllocationFragment.TAG);
+        fragment.addWorkActivity(workActivity);
+
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.allocation_container, fragment, AllocationFragment.TAG)
+                .commit();
     }
 
     @Override

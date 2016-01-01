@@ -32,70 +32,17 @@
                 android:elevation="4dp"
                 android:focusableInTouchMode="true">
 
-                <LinearLayout
+                <com.github.leonardocouto.pontodigital.view.component.WeekDayPicker
                     android:id="@+id/week_days"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:weightSum="16"
-                    android:layout_marginTop="10dp">
-
-                    <LinearLayout style="@style/week_day_button_wrapper"
-                        android:layout_weight="1"/>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/sunday_short" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/monday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/tuesday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/wednesday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/thrusday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/friday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper">
-                        <Button
-                            style="@style/week_day_button"
-                            android:text="@string/saturday_short"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/week_day_button_wrapper"
-                        android:layout_weight="1"/>
-                </LinearLayout>
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"/>
 
                 <LinearLayout
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
-                    android:layout_height="190dp"
+                    android:layout_height="180dp"
                     tools:ignore="Orientation">
                 </LinearLayout>
 

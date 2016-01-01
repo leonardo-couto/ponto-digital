@@ -5,10 +5,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.HeaderViewListAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,17 +40,28 @@ public class AllocationFragment extends AllocationFragmentBase {
 
     @Bind(R.id.chart) LinearLayout chartContainer;
     @Bind(R.id.listview_activity_allocation) ListView listView;
+    EditText allocationTitle;
+
     private WorkActivityAllocationAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allocation, container, false);
         View listHeader = view.inflate(this.getActivity(), R.layout.list_header_allocation_work_activity, null);
+        this.allocationTitle = (EditText) listHeader.findViewById(R.id.allocation_title);
         ButterKnife.bind(this, view);
 
+        if (savedInstanceState != null) {
+            String allocationTitleValue = savedInstanceState.getString("allocationTitle");
+            if (allocationTitleValue != null) {
+                this.allocationTitle.setText(allocationTitleValue);
+            }
+        }
+
         if (this.adapter == null) {
-            this.adapter = new WorkActivityAllocationAdapter(view.getContext(),
-                    R.layout.list_item_allocation_work_activity, new ArrayList<WorkActivity>());
+            int item = R.layout.list_item_allocation_work_activity;
+            List<WorkActivity> workActivities = buildWorkActivities(savedInstanceState);
+            this.adapter = new WorkActivityAllocationAdapter(view.getContext(), item, workActivities);
         }
 
         this.listView.addHeaderView(listHeader);
@@ -57,6 +70,13 @@ public class AllocationFragment extends AllocationFragmentBase {
         this.makeChart();
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("workActivities", this.adapter.getValues());
+        outState.putString("allocationTitle", this.allocationTitle.getText().toString());
     }
 
     @OnClick(R.id.add_new_activity)
@@ -110,4 +130,15 @@ public class AllocationFragment extends AllocationFragmentBase {
         renderer.setScale(1.3f);
         return renderer;
     }
+
+    private static List<WorkActivity> buildWorkActivities(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return new ArrayList<WorkActivity>();
+
+        }
+
+        List<WorkActivity> workActivities = savedInstanceState.<WorkActivity>getParcelableArrayList("workActivities");
+        return (workActivities == null) ? new ArrayList<WorkActivity>() : workActivities;
+    }
+
 }

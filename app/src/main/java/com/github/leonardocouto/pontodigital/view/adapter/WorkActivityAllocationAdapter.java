@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.github.leonardocouto.pontodigital.R;
 import com.github.leonardocouto.pontodigital.entity.WorkActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,8 +20,11 @@ import butterknife.ButterKnife;
 
 public class WorkActivityAllocationAdapter extends ArrayAdapter<WorkActivity> {
 
+    private final List<WorkActivity> workActivities;
+
     public WorkActivityAllocationAdapter(Context context, int resource, List<WorkActivity> objects) {
         super(context, resource, objects);
+        this.workActivities = objects;
     }
 
     @Override
@@ -44,6 +48,10 @@ public class WorkActivityAllocationAdapter extends ArrayAdapter<WorkActivity> {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.list_item_allocation_work_activity, parent, false);
         view.setTag(new ViewHolder(view));
         return view;
+    }
+
+    public ArrayList<WorkActivity> getValues() {
+        return new ArrayList<>(workActivities);
     }
 
     static class ViewHolder {

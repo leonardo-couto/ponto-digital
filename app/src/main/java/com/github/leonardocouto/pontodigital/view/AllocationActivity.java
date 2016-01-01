@@ -49,7 +49,10 @@ public class AllocationActivity extends Activity implements PickWorkActivityHand
 
     private void openAllocationFragment() {
         FragmentManager fragmentManager = getFragmentManager();
-        AllocationFragment fragment = new AllocationFragment();
+        AllocationFragment fragment = (AllocationFragment) fragmentManager.findFragmentByTag(AllocationFragment.TAG);
+        if (fragment == null) {
+            fragment = new AllocationFragment();
+        }
 
         fragmentManager
                 .beginTransaction()

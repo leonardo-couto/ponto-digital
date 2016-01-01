@@ -1,12 +1,25 @@
 package com.github.leonardocouto.pontodigital.entity;
 
-public class WorkActivity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WorkActivity implements Parcelable {
 
     private long id;
     private String area;
     private String client;
     private String project;
     private String name;
+
+    public WorkActivity() {}
+
+    protected WorkActivity(Parcel in) {
+        id = in.readLong();
+        area = in.readString();
+        client = in.readString();
+        project = in.readString();
+        name = in.readString();
+    }
 
     public long getId() { return id; }
 
@@ -56,5 +69,31 @@ public class WorkActivity {
         workActivity.setName(name);
         workActivity.setProject(project);
         return workActivity;
+    }
+
+    public static final Creator<WorkActivity> CREATOR = new Creator<WorkActivity>() {
+        @Override
+        public WorkActivity createFromParcel(Parcel in) {
+            return new WorkActivity(in);
+        }
+
+        @Override
+        public WorkActivity[] newArray(int size) {
+            return new WorkActivity[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(area);
+        dest.writeString(client);
+        dest.writeString(project);
+        dest.writeString(name);
     }
 }

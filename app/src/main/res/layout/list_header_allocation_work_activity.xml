@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/allocation_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/name"
+    android:textStyle="bold"
+    android:background="@android:color/transparent"
+    android:singleLine="true"
+    android:padding="10dp"
+    android:textColorHint="@color/lightGray"/>

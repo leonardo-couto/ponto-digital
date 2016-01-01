@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HeaderViewListAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -23,6 +24,9 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,6 +43,7 @@ public class AllocationFragment extends AllocationFragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allocation, container, false);
+        View listHeader = view.inflate(this.getActivity(), R.layout.list_header_allocation_work_activity, null);
         ButterKnife.bind(this, view);
 
         if (this.adapter == null) {
@@ -46,6 +51,7 @@ public class AllocationFragment extends AllocationFragmentBase {
                     R.layout.list_item_allocation_work_activity, new ArrayList<WorkActivity>());
         }
 
+        this.listView.addHeaderView(listHeader);
         this.listView.setAdapter(this.adapter);
 
         this.makeChart();

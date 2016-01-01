@@ -107,7 +107,7 @@ public class AllocationFragment extends AllocationFragmentBase {
         renderer.setZoomEnabled(false);
         renderer.setInScroll(false);
         renderer.setPanEnabled(false);
-        renderer.setScale(1.25f);
+        renderer.setScale(1.3f);
         return renderer;
     }
 }

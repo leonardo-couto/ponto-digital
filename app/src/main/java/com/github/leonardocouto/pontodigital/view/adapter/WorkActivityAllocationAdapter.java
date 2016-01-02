@@ -2,6 +2,7 @@ package com.github.leonardocouto.pontodigital.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,52 +19,44 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class WorkActivityAllocationAdapter extends ArrayAdapter<WorkActivity> {
+public class WorkActivityAllocationAdapter extends RecyclerView.Adapter<WorkActivityViewHolder> {
 
     private final List<WorkActivity> workActivities;
 
-    public WorkActivityAllocationAdapter(Context context, int resource, List<WorkActivity> objects) {
-        super(context, resource, objects);
-        this.workActivities = objects;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        WorkActivity workActivity = this.getItem(position);
-        View row = (convertView == null) ? this.inflateLayout(parent) : convertView;
-        ViewHolder holder = (ViewHolder) row.getTag();
-
-        // TODO ColorGenerator (from index)
-        // TODO time slot picker
-        holder.workActivityId = workActivity.getId();
-        holder.legendColor.setBackgroundResource(R.color.colorAccent);
-        holder.workActivity.setText(workActivity.getClient() + " - " + workActivity.getName() + " - " + workActivity.getProject());
-        holder.timeSlot.setText(new Random().nextInt(101) + "%");
-
-        return row;
-    }
-
-    private View inflateLayout(ViewGroup parent) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.list_item_allocation_work_activity, parent, false);
-        view.setTag(new ViewHolder(view));
-        return view;
+    public WorkActivityAllocationAdapter(List<WorkActivity> activities) {
+        this.workActivities = activities;
     }
 
     public ArrayList<WorkActivity> getValues() {
         return new ArrayList<>(workActivities);
     }
 
-    static class ViewHolder {
+    @Override
+    public WorkActivityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_allocation_work_activity, parent, false);
+        return new WorkActivityViewHolder(view);
+    }
 
-        long workActivityId;
-        @Bind(R.id.item_allocation_legend_color) View legendColor;
-        @Bind(R.id.item_allocation_work_activity) TextView workActivity;
-        @Bind(R.id.item_allocation_time_slot) TextView timeSlot;
+    @Override
+    public void onBindViewHolder(WorkActivityViewHolder holder, int position) {
+        WorkActivity workActivity = this.workActivities.get(position);
 
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
+        // TODO ColorGenerator (from index)
+        // TODO time slot picker
 
+        holder.workActivityId = workActivity.getId();
+        holder.legendColor.setBackgroundResource(R.color.colorAccent);
+        holder.workActivity.setText(workActivity.getClient() + " - " + workActivity.getName() + " - " + workActivity.getProject());
+        holder.timeSlot.setText(new Random().nextInt(101) + "%");
+    }
+
+    @Override
+    public int getItemCount() {
+        return this.workActivities.size();
+    }
+
+    public void add(WorkActivity workActivity) {
+        this.workActivities.add(workActivity);
+        this.notifyItemInserted(this.workActivities.size() - 1);
     }
 }

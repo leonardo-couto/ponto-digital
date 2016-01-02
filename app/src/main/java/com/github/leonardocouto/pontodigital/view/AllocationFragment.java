@@ -3,12 +3,13 @@ package com.github.leonardocouto.pontodigital.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.github.leonardocouto.pontodigital.R;
 import com.github.leonardocouto.pontodigital.entity.WorkActivity;
@@ -32,7 +33,7 @@ public class AllocationFragment extends AllocationFragmentBase {
     public static final String TAG = "allocation_fragment";
 
     @Bind(R.id.chart) LinearLayout chartContainer;
-    @Bind(R.id.listview_activity_allocation) ListView listView;
+    @Bind(R.id.listview_activity_allocation) RecyclerView recyclerView;
 
     EditText title;
     String titleValue;
@@ -47,16 +48,15 @@ public class AllocationFragment extends AllocationFragmentBase {
         ButterKnife.bind(this, view);
 
         if (this.adapter == null) {
-            int item = R.layout.list_item_allocation_work_activity;
-            List<WorkActivity> workActivities = buildWorkActivities(state);
-            this.adapter = new WorkActivityAllocationAdapter(view.getContext(), item, workActivities);
+            this.adapter = new WorkActivityAllocationAdapter(buildWorkActivities(state));
         }
 
         boolean changeTitle = this.titleValue == null && state != null;
         this.title.setText(changeTitle ? state.getString("title") : this.titleValue);
 
-        this.listView.addHeaderView(listHeader);
-        this.listView.setAdapter(this.adapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //this.recyclerView.addHeaderView(listHeader);
+        this.recyclerView.setAdapter(this.adapter);
 
         this.makeChart();
 

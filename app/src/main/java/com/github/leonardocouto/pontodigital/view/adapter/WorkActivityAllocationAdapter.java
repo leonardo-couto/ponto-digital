@@ -37,7 +37,7 @@ public class WorkActivityAllocationAdapter extends ArrayAdapter<WorkActivity> {
         // TODO ColorGenerator (from index)
         // TODO time slot picker
         holder.workActivityId = workActivity.getId();
-        holder.legendColor.setBackgroundColor(Color.rgb(155, 50, 50));
+        holder.legendColor.setBackgroundResource(R.color.colorAccent);
         holder.workActivity.setText(workActivity.getClient() + " - " + workActivity.getName() + " - " + workActivity.getProject());
         holder.timeSlot.setText(new Random().nextInt(101) + "%");
 

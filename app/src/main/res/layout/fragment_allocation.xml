@@ -7,78 +7,56 @@
     android:scrollbars="vertical"
     android:weightSum="1">
 
-    <ScrollView
-        tools:showIn="@layout/activity_allocation"
-        android:layout_height="0dp"
+    <LinearLayout
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:scrollbars="vertical"
+        android:weightSum="1"
+        android:focusable="true"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:focusableInTouchMode="true">
 
-        <LinearLayout
+        <com.github.leonardocouto.pontodigital.view.component.WeekDayPicker
+            android:id="@+id/week_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"/>
 
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:scrollbars="vertical"
-                android:weightSum="1"
-                android:focusable="true"
-                android:background="@color/white"
-                android:elevation="4dp"
-                android:focusableInTouchMode="true">
-
-                <com.github.leonardocouto.pontodigital.view.component.WeekDayPicker
-                    android:id="@+id/week_days"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"/>
-
-                <LinearLayout
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    tools:ignore="Orientation">
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/listview_activity_allocation"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent">
-            </ListView>
-
+        <LinearLayout
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            tools:ignore="Orientation">
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/add_new_activity"
-        android:layout_width="match_parent"
-        android:clickable="true"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:elevation="4dp"
-        android:layout_gravity="center_vertical"
-        android:background="@color/white">
+    <RelativeLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent">
 
-        <TextView
+        <ListView
+            android:id="@+id/listview_activity_allocation"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:paddingBottom="60dp"
+            android:clipToPadding="false"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_new_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/allocation_add_new_activity"
-            android:paddingTop="6dp"
-            android:paddingLeft="10dp"
-            android:background="@android:color/transparent"
-            android:textSize="18sp"
-            android:textColorHint="@color/lightGray"/>
+            android:layout_alignBottom="@+id/listview_activity_allocation"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_white_24dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

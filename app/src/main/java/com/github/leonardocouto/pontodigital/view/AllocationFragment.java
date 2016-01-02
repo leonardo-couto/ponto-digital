@@ -1,17 +1,12 @@
 package com.github.leonardocouto.pontodigital.view;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.HeaderViewListAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -26,8 +21,6 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,29 +33,27 @@ public class AllocationFragment extends AllocationFragmentBase {
 
     @Bind(R.id.chart) LinearLayout chartContainer;
     @Bind(R.id.listview_activity_allocation) ListView listView;
-    EditText allocationTitle;
+
+    EditText title;
+    String titleValue;
 
     private WorkActivityAllocationAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle state) {
         View view = inflater.inflate(R.layout.fragment_allocation, container, false);
         View listHeader = view.inflate(this.getActivity(), R.layout.list_header_allocation_work_activity, null);
-        this.allocationTitle = (EditText) listHeader.findViewById(R.id.allocation_title);
+        this.title = (EditText) listHeader.findViewById(R.id.allocation_title);
         ButterKnife.bind(this, view);
-
-        if (savedInstanceState != null) {
-            String allocationTitleValue = savedInstanceState.getString("allocationTitle");
-            if (allocationTitleValue != null) {
-                this.allocationTitle.setText(allocationTitleValue);
-            }
-        }
 
         if (this.adapter == null) {
             int item = R.layout.list_item_allocation_work_activity;
-            List<WorkActivity> workActivities = buildWorkActivities(savedInstanceState);
+            List<WorkActivity> workActivities = buildWorkActivities(state);
             this.adapter = new WorkActivityAllocationAdapter(view.getContext(), item, workActivities);
         }
+
+        boolean changeTitle = this.titleValue == null && state != null;
+        this.title.setText(changeTitle ? state.getString("title") : this.titleValue);
 
         this.listView.addHeaderView(listHeader);
         this.listView.setAdapter(this.adapter);
@@ -73,10 +64,16 @@ public class AllocationFragment extends AllocationFragmentBase {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        this.titleValue = this.title.getText().toString();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("workActivities", this.adapter.getValues());
-        outState.putString("allocationTitle", this.allocationTitle.getText().toString());
+        outState.putString("title", this.title.getText().toString());
     }
 
     @OnClick(R.id.add_new_activity)

@@ -35,7 +35,6 @@ public class AllocationFragment extends AllocationFragmentBase {
     @Bind(R.id.chart) LinearLayout chartContainer;
     @Bind(R.id.listview_activity_allocation) RecyclerView recyclerView;
 
-    EditText title;
     String titleValue;
 
     private WorkActivityAllocationAdapter adapter;
@@ -43,8 +42,6 @@ public class AllocationFragment extends AllocationFragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle state) {
         View view = inflater.inflate(R.layout.fragment_allocation, container, false);
-        View listHeader = view.inflate(this.getActivity(), R.layout.list_header_allocation_work_activity, null);
-        this.title = (EditText) listHeader.findViewById(R.id.allocation_title);
         ButterKnife.bind(this, view);
 
         if (this.adapter == null) {
@@ -52,10 +49,9 @@ public class AllocationFragment extends AllocationFragmentBase {
         }
 
         boolean changeTitle = this.titleValue == null && state != null;
-        this.title.setText(changeTitle ? state.getString("title") : this.titleValue);
+        this.adapter.setTitle(changeTitle ? state.getString("title") : this.titleValue);
 
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //this.recyclerView.addHeaderView(listHeader);
         this.recyclerView.setAdapter(this.adapter);
 
         this.makeChart();
@@ -66,14 +62,14 @@ public class AllocationFragment extends AllocationFragmentBase {
     @Override
     public void onPause() {
         super.onPause();
-        this.titleValue = this.title.getText().toString();
+        this.titleValue = this.adapter.getTitle();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("workActivities", this.adapter.getValues());
-        outState.putString("title", this.title.getText().toString());
+        outState.putString("title", this.adapter.getTitle());
     }
 
     @OnClick(R.id.add_new_activity)

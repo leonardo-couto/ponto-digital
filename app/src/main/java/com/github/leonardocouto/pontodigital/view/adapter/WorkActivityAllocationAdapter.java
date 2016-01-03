@@ -21,7 +21,13 @@ import butterknife.ButterKnife;
 
 public class WorkActivityAllocationAdapter extends RecyclerView.Adapter<WorkActivityViewHolder> {
 
+    private static final int HEADER = 0;
+    private static final int LAYOUT_HEADER = R.layout.list_header_allocation_work_activity;
+    private static final int LAYOUT_ITEM = R.layout.list_item_allocation_work_activity;
+
     private final List<WorkActivity> workActivities;
+    private String title;
+    private WorkActivityViewHolder header;
 
     public WorkActivityAllocationAdapter(List<WorkActivity> activities) {
         this.workActivities = activities;
@@ -33,13 +39,27 @@ public class WorkActivityAllocationAdapter extends RecyclerView.Adapter<WorkActi
 
     @Override
     public WorkActivityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_allocation_work_activity, parent, false);
-        return new WorkActivityViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+        if (viewType == HEADER) {
+            View view = inflater.inflate(LAYOUT_HEADER, parent, false);
+            WorkActivityViewHolder viewHolder = new WorkActivityViewHolder(view, true);
+            this.header = viewHolder;
+            return viewHolder;
+        }
+
+        View view = inflater.inflate(LAYOUT_ITEM, parent, false);
+        return new WorkActivityViewHolder(view, false);
     }
 
     @Override
     public void onBindViewHolder(WorkActivityViewHolder holder, int position) {
-        WorkActivity workActivity = this.workActivities.get(position);
+        if (position == 0) {
+            holder.title.setText(this.title);
+            return;
+        }
+
+        WorkActivity workActivity = this.workActivities.get(position - 1);
 
         // TODO ColorGenerator (from index)
         // TODO time slot picker
@@ -52,11 +72,31 @@ public class WorkActivityAllocationAdapter extends RecyclerView.Adapter<WorkActi
 
     @Override
     public int getItemCount() {
-        return this.workActivities.size();
+        return this.workActivities.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == 0) ? HEADER : 1;
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(WorkActivityViewHolder holder) {
+        if (holder.isHeader()) {
+            this.title = holder.title.getText().toString();
+        }
     }
 
     public void add(WorkActivity workActivity) {
         this.workActivities.add(workActivity);
-        this.notifyItemInserted(this.workActivities.size() - 1);
+        this.notifyItemInserted(this.workActivities.size());
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return (header == null) ? this.title : header.title.getText().toString();
     }
 }
